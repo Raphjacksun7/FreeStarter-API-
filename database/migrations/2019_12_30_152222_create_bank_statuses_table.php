@@ -20,7 +20,13 @@ class CreateBankStatusesTable extends Migration
                   ->references('id')
                   ->on('projects')
                   ->onDelete('cascade');
-            $table->string('profil')->nullable();
+            $table->string('isValidEmail')->default(false);
+            $table->string('realName')->nullable();
+            $table->string('nameOfBank')->nullable();
+            $table->string('bankAccountNumber')->nullable();
+            $table->string('RIB')->nullable();
+            $table->string('status')->nullable();
+            $table->string('statusProof')->nullable();
             $table->timestamps();
         });
     }

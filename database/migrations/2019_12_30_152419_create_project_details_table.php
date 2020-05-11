@@ -20,7 +20,7 @@ class CreateProjectDetailsTable extends Migration
                   ->references('id')
                   ->on('projects')
                   ->onDelete('cascade');
-            $table->string('localisation');
+            $table->string('localisation')->nullable();
             $table->string('image')->nullable();
             $table->string('video')->nullable();
             $table->text('slogan')->nullable();

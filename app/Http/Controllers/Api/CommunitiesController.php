@@ -32,7 +32,7 @@ class CommunitiesController extends Controller
     {
         $communities = Communities::where('projects_id', $projectId)->first();
 
-        return response()->json('communities', 201);
+        return response()->json($communities, 201);
     }
 
 

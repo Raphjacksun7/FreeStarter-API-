@@ -20,7 +20,7 @@ class CreateRewardsTable extends Migration
                   ->references('id')
                   ->on('projects')
                   ->onDelete('cascade');
-            $table->integer('amount');
+            $table->integer('amount')->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('image')->nullable();

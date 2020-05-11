@@ -16,6 +16,11 @@ class AuthController extends Controller
      * @return \Illuminate\Http\Response 
      */ 
 
+        public function index()
+        {
+            $users = Users::all();
+            return response()->json($users, 200);
+        }
 
         public function login(Request $request){ 
 
@@ -77,9 +82,34 @@ class AuthController extends Controller
             return response()->json($request->user());
         }
 
+
+        public function getUserById($id)
+        {
+            $user = Users::FindOrFail($id);
+            return response()->json($user, 200);
+        }
+
+
         public function logout(Request $request) 
         { 
             $request->user()->token()->revoke();
             return response()->json(['message' => 'Successfully logged out']); 
         } 
-}
+
+        public function delete($id) 
+        { 
+            $projects = Projects::where('user_id', $id)->get();
+            foreach($project->id as $project_id){
+                ProjectDetails::where('user_id', $project_id)->delete();
+                Rewards::where('user_id', $project_id)->delete();
+                Contributors::where('user_id', $project_id)->delete();
+                BankStatuses::where('user_id', $project_id)->delete();
+                Communities::where('user_id', $project_id)->delete();
+            }
+            Projects::where('user_id', $id)->delete();
+            Users::findOrFail($id)->delete();
+
+            return response()->json('This user is sucessfully deleted !', 204);
+        }
+        
+    }

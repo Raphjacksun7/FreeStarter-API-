@@ -30,8 +30,8 @@ class ProjectDetailsController extends Controller
             //\File::put(storage_path(). '/public/' . $imageName, $image);
             Storage::disk('upload')->put($imageName, $image);
             $input['image'] = $imageName;
-            $projectDetails = ProjectDetails::create($input);
         }
+        $projectDetails = ProjectDetails::create($input);
         return response()->json($projectDetails, 201);
     }
 
@@ -65,7 +65,17 @@ class ProjectDetailsController extends Controller
     public function updateProjectDetailsByProjectId(Request $request, $projectId)
     {
         $projectDetails = ProjectDetails::where('projects_id', $projectId)->first();
-        $projectDetails->update($request->all());
+        $input = $request->all(); 
+        $base64_image = $input['image'];
+        if (preg_match('/^data:image\/(\w+);base64,/', $base64_image)) {
+            $image = substr($base64_image, strpos($base64_image, ',') + 1);
+            $image = base64_decode($image);
+            $imageName = 'project-'.$input['projects_id'].'_'.Str::random(6).'.'.'png';
+            //\File::put(storage_path(). '/public/' . $imageName, $image);
+            Storage::disk('upload')->put($imageName, $image);
+            $input['image'] = $imageName;
+        }
+        $projectDetails->update($input);
 
         return response()->json($projectDetails, 200);
     }

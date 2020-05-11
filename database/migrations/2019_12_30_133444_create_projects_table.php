@@ -27,7 +27,7 @@ class CreateProjectsTable extends Migration
             $table->string('contributors_number')->nullable();
             $table->string('duration');
             $table->string('progression')->nullable();
-            $table->string('contact');
+            $table->string('contact')->nullable();
             $table->string('valider')->default(false);
             $table->timestamps();
         });

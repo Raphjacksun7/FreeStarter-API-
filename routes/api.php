@@ -14,12 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+// Authentification
+
+Route::get('getUser/{id}', 'Api\AuthController@getUserById');
 Route::post('/login', 'Api\AuthController@login');
 Route::post('/register', 'Api\AuthController@register');
+Route::get('getUsers', 'Api\AuthController@index');
+Route::delete('delete', 'Api\AuthController@delete');
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('logout', 'Api\AuthController@logout');
     Route::get('user', 'Api\AuthController@user');
 });
+
 
 // Projects
 
@@ -28,9 +35,9 @@ Route::get('getProjectById/{id}', 'Api\ProjectsController@getProjectById');
 Route::get('getProjectAllDetailsById/{id}', 'Api\ProjectsController@getProjectAllDetailsById');
 Route::get('getUserProjects/{userId}', 'Api\ProjectsController@getUserProjects');
 Route::post('createProject', 'Api\ProjectsController@store');
-Route::put('updateProjectById/{id}', 'Api\ProjectsController@update');
+Route::put('updateProjectById/{id}', 'Api\ProjectsController@updateProjectById');
 Route::put('validateProject/{id}', 'Api\ProjectsController@validateProject');
-Route::delete('deleteProjectById/{id}', 'Api\ProjectsController@delete');
+Route::delete('deleteProjectById/{id}', 'Api\ProjectsController@deleteProjectById');
 
 
 // Projects Details
@@ -56,6 +63,7 @@ Route::put('updateCommunitiesByProjectId/{projectId}', 'Api\CommunitiesControlle
 // Contributors
 
 Route::get('getContributorById/{id}', 'Api\ContributorsController@getContributorById');
+Route::get('getUserContributons/{id}', 'Api\ContributorsController@getUserContributons');
 Route::get('getContributorByProjectId/{projectId}', 'Api\ContributorsController@getContributorByProjectId');
 Route::post('saveContributor', 'Api\ContributorsController@store');
 
@@ -65,7 +73,7 @@ Route::post('saveContributor', 'Api\ContributorsController@store');
 Route::get('getProjectRewardsById/{id}', 'Api\RewardsController@getProjectRewardsById');
 Route::get('getProjectRewardsByProjectId/{projectId}', 'Api\RewardsController@getProjectRewardsByProjectId');
 Route::post('addProjectReward', 'Api\RewardsController@store');
-Route::put('updategetProjectRewardsById/{id}', 'Api\RewardsController@updategetProjectRewardsById');
+Route::put('updateProjectRewardsById/{id}', 'Api\RewardsController@updateProjectRewardsById');
 Route::delete('deleteProjectRewardsById/{id}', 'Api\RewardsController@deleteProjectRewardsById');
 
 

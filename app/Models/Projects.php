@@ -18,7 +18,7 @@ class Projects extends Model
      * @var array
      */
     protected $fillable = [
-      'user_id','title', 'category', 'current_budget','budget','contributors_number','duration','progression','contact','validate',
+      'user_id','title', 'category', 'current_budget','budget','contributors_number','duration','progression','contact','valider',
     ];
 
 

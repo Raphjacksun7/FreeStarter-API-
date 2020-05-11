@@ -46,11 +46,25 @@ class ProjectsController extends Controller
         $project = Projects::where('user_id',$id)->with(['users'])->get();
         return response()->json($project, 200);
     }
+    
 
     public function store(Request $request)
     {    
         $project = Projects::create($request->all());
-
+        $input = Projects::latest()->first();
+        $project_details = ProjectDetails::create(['projects_id' => $input['id']]);
+        $rewards = Rewards::create([
+            'projects_id' => $input['id'], 
+            'amount' => '1000', 
+            'title' => 'Ma Contrepartie Test', 
+            'description' => 'Vous devez donné des détails très 
+            clair sur ce que les contributeurs gagnent en contribuant 
+            avec le montant ci-dessus. N\'oublier pas la date de la 
+            livraison , que ce soit un bien matériel ou non.'
+            ]);
+        $bank_statuses = BankStatuses::create(['projects_id' => $input['id']]);
+        $communities = Communities::create(['projects_id' => $input['id']]);
+        
         return response()->json($project, 201);
     }
 
@@ -59,15 +73,15 @@ class ProjectsController extends Controller
     {    
         $project = Projects::findOrFail($id);
         $date = Carbon::now();
-        $project['duration'] = $date->addDays($project['duration']); 
-        $project['validate'] = 1; 
-        $project = Projects::update($project); 
-
+        $project['duration'] = $date->addDays($project['duration'])->toDateString(); 
+        $project['valider'] = 1; 
+        $project->save();
+        // $project = Projects::update($project); 
         return response()->json($project, 200);
     }
 
 
-    public function updateProject(Request $request, $id)
+    public function updateProjectById(Request $request, $id)
     {
         $project = Projects::findOrFail($id);
         $project->update($request->all());

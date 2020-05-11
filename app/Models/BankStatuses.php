@@ -13,7 +13,7 @@ class BankStatuses extends Model
      * @var array
      */
     protected $fillable = [
-      'projects_id','profil', 
+      'projects_id','isValidEmail','realName','nameOfBank','bankAccountNumber','RIB','status','statusProof', 
     ];
 
 
